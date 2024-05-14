@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+{{ super() }}
+<p>Регрессия
+<form action="/p_lab4" method="POST">
+    <p><input type="text" class="form_text" name="list1"> введите количество кв</p>
+    <p><input name="list2" class="form_text" type="text"> введите этаж</p>
+    <p><input name="list3" class="form_text" type="text"> введите сколько лет дому</p>
+    <input type="submit" class="form_btn" value="Узнать цену">
+    <h1>{{class_model}}</h1>
+    <h1>{{class_acc}}</h1>
+    </p>
+</form>
+{% endblock %}
