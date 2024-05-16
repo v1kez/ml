@@ -1,6 +1,6 @@
 import pickle
 import numpy as np
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, jsonify
 
 app = Flask(__name__)
 
@@ -25,7 +25,7 @@ loaded_model_Tree = pickle.load(open('model3/Lapa_drevo', 'rb'))
 
 @app.route("/")
 def index():
-    return render_template('index.html', title="Лабораторная работа №10", menu=menu)
+    return render_template('index.html', title="Лабораторную работу выполнил Буренок Д.Р.", menu=menu)
 
 
 @app.route("/p_knn", methods=['POST', 'GET'])
@@ -38,6 +38,11 @@ def f_lab1():
                            ]])
         pred = loaded_model_knn.predict(X_new)
         animal = animal_dict[pred[0]]
+        X_train1, X_test1, Y_train1, Y_test1 = train_test_split(X, Y, test_size=0.5, random_state=10)
+        y_true = Y_train1
+        y_pred = Y_test1
+        target_names = ['class 0', 'class 1']
+        acc = classification_report(y_true, y_pred, target_names=target_names)
         return render_template('lab1.html', title="Метод KNN", menu=menu,
                                class_model="Это: " + animal)
 
@@ -67,6 +72,14 @@ def f_lab3():
         animal = animal_dict[pred[0]]
         return render_template('lab3.html', title="Дерево решений", menu=menu,
                                class_model="Это: " + animal)
+
+@app.route('/api', methods=['get'])
+def get_sort():
+    X_new = np.array([[float(request.args.get('lapa_length')),
+                       float(request.args.get('lapa_width'))]])
+    pred = loaded_model_knn.predict(X_new)
+    animal = animal_dict[pred[0]]
+    return jsonify(sort=animal)
 
 
 # @app.route("/p_lab4", methods=['POST', 'GET'])
