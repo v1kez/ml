@@ -15,8 +15,6 @@ X_train1,X_test1,Y_train1,Y_test1=train_test_split(X,Y,test_size=0.3,random_stat
 model = KNeighborsClassifier(n_neighbors=3)
 model.fit(X_train1, Y_train1)
 y_pred = model.predict(X_test1)
-
-print(acc)
 df = pd.DataFrame({'y_pred': y_pred,
                    'Y_test1': Y_test1})
 with open('lapa_fileKNN', 'wb') as pkl:

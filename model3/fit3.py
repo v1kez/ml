@@ -18,6 +18,8 @@ X_train1,X_test1,Y_train1,Y_test1=train_test_split(X,Y,test_size=0.5,random_stat
 y_true = Y_train1
 y_pred = Y_test1
 target_names = ['class 0', 'class 1']
-print(classification_report(y_true, y_pred, target_names=target_names))
+acc=classification_report(y_true, y_pred, target_names=target_names)
+print(acc)
+
 with open('Lapa_drevo', 'wb') as pkl:
     pickle.dump(model, pkl)
